@@ -16,7 +16,7 @@ use std::{
     sync::Mutex,
     time::{SystemTime, UNIX_EPOCH},
 };
-use tauri::{Manager, State};
+use tauri::{image::Image, Manager, State};
 use zeroize::{Zeroize, Zeroizing};
 
 const VAULT_FILE_NAME: &str = "vault.encrypted.json";
@@ -743,6 +743,16 @@ pub fn run() {
                 .map_err(|error| format!("Cannot resolve application data directory: {error}"))?;
             vault_path.push(VAULT_FILE_NAME);
             app.manage(AppState::new(vault_path));
+
+            // Enforce a custom app/window icon at runtime to avoid falling back to Tauri defaults.
+            let window_icon = Image::from_bytes(include_bytes!("../icons/icon.png"))
+                .map_err(|error| format!("Cannot load application icon: {error}"))?;
+            if let Some(main_window) = app.get_webview_window("main") {
+                main_window
+                    .set_icon(window_icon)
+                    .map_err(|error| format!("Cannot set window icon: {error}"))?;
+            }
+
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![

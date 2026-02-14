@@ -420,11 +420,57 @@ function App() {
               <section className="rounded-xl border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
                 <h2 className="mb-3 text-lg font-semibold">{editingId ? "Edit Entry" : "Add Entry"}</h2>
                 <form className="space-y-2" onSubmit={saveEntry}>
-                  <input required value={form.service} onChange={(event) => setForm((current) => ({ ...current, service: event.currentTarget.value }))} placeholder="Service" className="input" />
-                  <input value={form.username} onChange={(event) => setForm((current) => ({ ...current, username: event.currentTarget.value }))} placeholder="Username" className="input" />
-                  <input required type="password" autoComplete="off" value={form.password} onChange={(event) => setForm((current) => ({ ...current, password: event.currentTarget.value }))} placeholder="Password" className="input" />
-                  <input type="url" value={form.url} onChange={(event) => setForm((current) => ({ ...current, url: event.currentTarget.value }))} placeholder="URL" className="input" />
-                  <textarea rows={3} value={form.notes} onChange={(event) => setForm((current) => ({ ...current, notes: event.currentTarget.value }))} placeholder="Notes" className="input" />
+                  <input
+                    required
+                    value={form.service}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      setForm((current) => ({ ...current, service: value }));
+                    }}
+                    placeholder="Service"
+                    className="input"
+                  />
+                  <input
+                    value={form.username}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      setForm((current) => ({ ...current, username: value }));
+                    }}
+                    placeholder="Username"
+                    className="input"
+                  />
+                  <input
+                    required
+                    type="password"
+                    autoComplete="off"
+                    value={form.password}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      setForm((current) => ({ ...current, password: value }));
+                    }}
+                    placeholder="Password"
+                    className="input"
+                  />
+                  <input
+                    type="url"
+                    value={form.url}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      setForm((current) => ({ ...current, url: value }));
+                    }}
+                    placeholder="URL"
+                    className="input"
+                  />
+                  <textarea
+                    rows={3}
+                    value={form.notes}
+                    onChange={(event) => {
+                      const value = event.currentTarget.value;
+                      setForm((current) => ({ ...current, notes: value }));
+                    }}
+                    placeholder="Notes"
+                    className="input"
+                  />
                   <div className="flex gap-2">
                     <button type="submit" className="btn-primary flex-1">{editingId ? "Save" : "Add"}</button>
                     <button type="button" onClick={resetForm} className="btn-secondary">Clear</button>
@@ -435,13 +481,37 @@ function App() {
               <section className="rounded-xl border border-slate-300 bg-white/80 p-4 dark:border-slate-800 dark:bg-slate-900/70">
                 <h2 className="mb-2 text-lg font-semibold">Generator</h2>
                 <label className="text-sm">Length: {generator.length}</label>
-                <input type="range" min={12} max={24} value={generator.length} onChange={(event) => setGenerator((current) => ({ ...current, length: Number(event.currentTarget.value) }))} className="mb-2 w-full" />
+                <input
+                  type="range"
+                  min={12}
+                  max={24}
+                  value={generator.length}
+                  onChange={(event) => {
+                    const value = Number(event.currentTarget.value);
+                    setGenerator((current) => ({ ...current, length: value }));
+                  }}
+                  className="mb-2 w-full"
+                />
                 <label className="mb-1 flex items-center gap-2 text-sm">
-                  <input type="checkbox" checked={generator.includeNumbers} onChange={(event) => setGenerator((current) => ({ ...current, includeNumbers: event.currentTarget.checked }))} />
+                  <input
+                    type="checkbox"
+                    checked={generator.includeNumbers}
+                    onChange={(event) => {
+                      const checked = event.currentTarget.checked;
+                      setGenerator((current) => ({ ...current, includeNumbers: checked }));
+                    }}
+                  />
                   Include numbers
                 </label>
                 <label className="mb-2 flex items-center gap-2 text-sm">
-                  <input type="checkbox" checked={generator.includeSymbols} onChange={(event) => setGenerator((current) => ({ ...current, includeSymbols: event.currentTarget.checked }))} />
+                  <input
+                    type="checkbox"
+                    checked={generator.includeSymbols}
+                    onChange={(event) => {
+                      const checked = event.currentTarget.checked;
+                      setGenerator((current) => ({ ...current, includeSymbols: checked }));
+                    }}
+                  />
                   Include symbols
                 </label>
                 <button type="button" onClick={() => void generatePassword()} className="btn-secondary w-full">Generate and fill password</button>
